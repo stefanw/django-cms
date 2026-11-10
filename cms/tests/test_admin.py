@@ -847,7 +847,7 @@ class AdminFormsTests(AdminTestsBase):
 
         with self.login_user_context(superuser):
             response = self.client.post(page2_endpoint, page2_data)
-            expected_error = '<ul class="errorlist">' "<li>A page with this reverse URL id exists already.</li></ul>"
+            expected_error = '<ul class="errorlist"><li>A page with this reverse URL id exists already.</li></ul>'
             self.assertEqual(response.status_code, 200)
             self.assertContains(response, expected_error.format(page2.pk), html=True)
 
@@ -954,7 +954,9 @@ class AdminFormsTests(AdminTestsBase):
         <span>Advanced settings...<span class="cms-icon cms-icon-arrow"></span></span>
     </a>
 </li>"""
-        disabled_snippet = snippet.format("cms-toolbar-item-navigation-disabled", 'tabindex="-1" ', advanced_settings_url)
+        disabled_snippet = snippet.format(
+            "cms-toolbar-item-navigation-disabled", 'tabindex="-1" ', advanced_settings_url
+        )
         enabled_snippet = snippet.format("", "", advanced_settings_url)
 
         # Test with admin user - should see advanced settings
@@ -1443,7 +1445,10 @@ class AdminPageTreeTests(AdminTestsBase):
             for language in languages:
                 request = self.get_request(path=f"{url}?language={language}")
                 response = pagecontent_admin.get_tree(request)
-                self.assertContains(response, f'href="{add_url}?parent_page={page[language].id}&language={language}"')
+                self.assertContains(
+                    response,
+                    f'href="{add_url}?site={page[language].site_id}&amp;parent_page={page[language].id}&language={language}"',
+                )
 
 
 class AdminInputSanitationTests(AdminTestsBase):

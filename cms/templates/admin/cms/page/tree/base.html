@@ -303,7 +303,7 @@
                         {% blocktrans with object=_('page') %}
                             <em>There is no {{ object }} around yet.</em>
                             <br>
-                            <a href="{{ add_url }}" class="addlink">Add {{ object }}</a> now.
+                            <a href="{{ add_url }}?language={{ preview_language }}&amp;site={{ tree.site.pk|unlocalize }}" class="addlink">Add {{ object }}</a> now.
                         {% endblocktrans %}
                     </div>
                 {% endif %}
